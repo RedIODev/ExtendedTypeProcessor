@@ -12,6 +12,8 @@ import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.TypeParameterElement;
 
+import dev.redio.typeinfo.annotations.Retain;
+
 @SupportedAnnotationTypes("dev.redio.typeinfo.*")
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
 public class TypeProcessor extends AbstractProcessor {
@@ -38,21 +40,24 @@ public class TypeProcessor extends AbstractProcessor {
     }
 
     private void processRetainSingleParam(Element element, RoundEnvironment roundEnv) {
-        System.out.println("Parameter: " + element);
+        var m = processingEnv.getMessager();
+        m.printNote("Parameter: " + element);
         if (element instanceof TypeParameterElement e)
-            System.out.println("Is type parameter!");
-        System.out.println("From:" + element.getEnclosingElement());
+            m.printNote("Is type parameter!");
+        m.printNote("From:" + element.getEnclosingElement());
     }
 
     private void processRetainClass(Element element, RoundEnvironment roundEnv) {
-        System.out.println("Class: " + element);
+        var m = processingEnv.getMessager();
+        m.printNote("Class: " + element);
         if (element instanceof TypeElement e)
-            System.out.println("Is type!");
+            m.printNote("Is type!");
     }
 
     private void processRetainMethod(Element element, RoundEnvironment roundEnv) {
-        System.out.println("Method: " + element);
+        var m = processingEnv.getMessager();
+        m.printNote("Method: " + element);
         if (element instanceof ExecutableElement)
-            System.out.println("Is executable!");
+            m.printNote("Is executable!");
     }
 }
